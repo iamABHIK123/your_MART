@@ -12,6 +12,7 @@ function App() {
     <div className="App">
       <Router>
       <Navbar/>
+      {/* Routes: To render a single component, wrap all the routes inside the Routes Component ;By default, routes are inclusive which means more than one Route component can match the URL path and render at the same time. If we want to render a single component, we need to use routes.*/}
       <Routes>
         <Route path='/shopping-cart' element={<ShoppingCart/>}></Route>
         <Route path='/' element={<Contents/>}></Route>
