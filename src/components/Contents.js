@@ -102,13 +102,13 @@ export class Contents extends Component{
                     <div className='col-9'>
                         <div className='row'>
                             {this.state.products.map(product=>(<div className='col-4'><div key={product['title']} className="card" style={{width:'18rem'}}>
-                    <img src={product['imagesUrl']}  className="card-img-top"/>
+                    <img src={product['imagesUrl']} style={{width: '18rem', height: '15rem'}}className="card-img-top"/>
                                
                                <div className="card-body">
                                 <h5 className="card-title">{product['title']}</h5>
                                 <h5 className="card-title">{product['price']}</h5>
                              <div className="row">
-                               <div className="col-6">
+                                 <div className="col-6">
                                     {/* here onChange event is taking an argument ;; e=event ,targer=select tag , value jho ap likh k rakhe hai*/}
                                     <select key={product['title']} className="form-select" onClick={(e)=>this.handleChange(e.target.value)}>
                                         <option value="0">QUANTITY</option>
@@ -118,7 +118,7 @@ export class Contents extends Component{
                                         <option value="4">5</option>
                                         <option value="5">6</option>
                                     </select>
-                                    </div>
+                                  </div>
                                 <div className='col-6'>
                                <button className='btn btn-primary' onClick={()=>{this.addtocart(product)}}>ADD TO CART</button>
                                </div>
