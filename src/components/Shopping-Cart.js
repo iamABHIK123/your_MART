@@ -9,7 +9,7 @@ export class ShoppingCart extends Component{
         products:{},
         sum:0
     }
-
+// componentDidMount helps to stub the js with html
     componentDidMount(){
         let cartid=localStorage.getItem('cartid');
         console.log(cartid);
@@ -51,7 +51,7 @@ export class ShoppingCart extends Component{
     render(){
         return(
             <div className='container'>
-            <table>
+            <table class="table table-dark">
                 <thread>
                     <tr>
                         <th scope="col">#</th>
