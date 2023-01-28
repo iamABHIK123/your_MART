@@ -27,6 +27,7 @@ export class Contents extends Component{
         }
         else{
             this.state.products=this.allProducts;
+            // const products is a local variable
             const products=this.state.products.filter((product)=>
                 product['category']===category
             )
@@ -34,6 +35,8 @@ export class Contents extends Component{
             console.log(products);
         }
     }
+
+    // two changes ,1 in browser(through localStorage obj) and 1 in firebase using set,ref
     addtocart(product){
         // 2000 - 3000 ka range mein e (Math.random()*99999000).toFixed(); fun unique value de dega,iske bad repeat hoga
         let productid=(Math.random()*99999000).toFixed();
@@ -48,6 +51,7 @@ export class Contents extends Component{
                 'product':product,
                 'quantity':Number(this.state.quantity)
             });
+            //local storage obj helps to save data in your browser
             localStorage.setItem('cartid',cartid);
         }
         else{
@@ -60,14 +64,15 @@ export class Contents extends Component{
         }
     }
     getProducts(){
-        const reference=ref(db,'products');
-        onValue(reference,(snapshot)=>{
-
-            let products=snapshot.val();
-            this.setState({products:products});
-            this.allProducts=products;
-            console.log(this.state.products);
-        })
+      const reference = ref(db, "products");
+      //When you call onValue you get the current value from that path in the database, and then also get all updates to that value. Since your callback may be called multiple times, there is no way to return a single value.
+      onValue(reference, (snapshot) => {
+        //A DataSnapshot contains data from a Database location. Any time you read data from the Database, you receive the data as a DataSnapshot . A DataSnapshot is passed to the event callbacks you attach with on() or once() . You can extract the contents of the snapshot as a JavaScript object by calling the val() method.
+        let products = snapshot.val();
+        this.setState({ products: products });
+        this.allProducts = products;
+        console.log(this.state.products);
+      });
     }
 
     getCategories(){
@@ -101,14 +106,15 @@ export class Contents extends Component{
 
                     <div className='col-9'>
                         <div className='row'>
-                            {this.state.products.map(product=>(<div className='col-4'><div key={product['title']} className="card" style={{width:'18rem'}}>
-                    <img src={product['imagesUrl']} style={{width: '18rem', height: '15rem'}}className="card-img-top"/>
+                            {this.state.products.map(product=>(<div className='col-4'>
+                                <div key={product['title']} className="card" style={{width:'18rem'}}>
+                                <img src={product['imagesUrl']} style={{width: '18rem', height: '15rem'}}className="card-img-top"/>
                                
                                <div className="card-body">
                                 <h5 className="card-title">{product['title']}</h5>
-                                <h5 className="card-title">{product['price']}</h5>
+                                <h5 className="card-title">₹{product['price']}</h5>
                              <div className="row">
-                                 <div className="col-6">
+                                 <div className="col-7">
                                     {/* here onChange event is taking an argument ;; e=event ,targer=select tag , value jho ap likh k rakhe hai*/}
                                     <select key={product['title']} className="form-select" onClick={(e)=>this.handleChange(e.target.value)}>
                                         <option value="0">QUANTITY</option>
@@ -119,7 +125,7 @@ export class Contents extends Component{
                                         <option value="5">6</option>
                                     </select>
                                   </div>
-                                <div className='col-6'>
+                                <div className='col-5'>
                                <button className='btn btn-primary' onClick={()=>{this.addtocart(product)}}>ADD TO CART</button>
                                </div>
                              </div>

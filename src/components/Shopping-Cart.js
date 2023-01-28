@@ -11,24 +11,18 @@ export class ShoppingCart extends Component{
     }
 // componentDidMount helps to stub the js with html
     componentDidMount(){
-        let cartid=localStorage.getItem('cartid');
-        console.log(cartid);
-        let refrence=ref(db,'shopping-cart/'+cartid+'/items');
-        console.log(refrence);
+        let cartid=localStorage.getItem('cartid');  
+        let refrence=ref(db,'shopping-cart/'+cartid+'/items');  
         onValue(refrence,(snapshot)=>{
             let products=snapshot.val();
             this.setState({products:products});
-
-            console.log(this.state.products);
-            // this.calculatetotal();
-            // console.log(this.state.products);
         });
     }
 
     handleDelete=(product)=>{
         // "..." ->this is called spread operator 
         let products={...this.state.products};
-        // deleting product from the arrray
+        // deleting product from the arrray,delete keyword foir array,remove db
         delete products[product];
         this.setState({products:products});
         let cartid=localStorage.getItem('cartid');
@@ -51,21 +45,21 @@ export class ShoppingCart extends Component{
     render(){
         return(
             <div className='container'>
-            <table class="table table-dark">
-                <thread>
-                    <tr>
-                        <th scope="col">#</th>
+            <table class="table">
+                      
+                <tbody>
+                <tr class="table-dark">
+                        <th scope="col">No.</th>
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Total Price</th>
+                        <th scope="col"></th>
                     </tr>
-                </thread>
-                <tbody>
                     {/* map always takes two argument ,i=index(optional to use)*/}
                     {Object.keys(this.state.products).map((product,i)=>(
                       <tr>
-                        <th scope="row">{i+1}</th>
+                        <th scope="row">{i+1}.</th>
                         <td>{this.state.products[product].product.title}</td>
                         <td>{this.state.products[product].product.price}</td>
                         <td>{this.state.products[product].quantity}</td>

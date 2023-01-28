@@ -17,6 +17,7 @@ export class Navbar extends Component{
 // navigation bar upload hone k bad componentDidMount call hoga asynchronously in DOM tree
 componentDidMount(){
     
+  //The module provides a method called onAuthStateChanged which allows you to subscribe to the users current authentication state, and receive an event whenever that state changes.
     onAuthStateChanged(auth,(user)=>{
      if(user)
      this.setState({loginstatus:true})
@@ -25,8 +26,6 @@ componentDidMount(){
  })
 
  let cartid=localStorage.getItem('cartid');
- console.log(cartid);
-
  if(cartid!=null){
   try{
   const refernce=ref(db,'shopping-cart/'+cartid+'/items');
@@ -34,7 +33,7 @@ componentDidMount(){
   onValue(refernce,(snapshot)=>{
     // productsInCart will get an array of object 
     let productsInCart=snapshot.val();
-    console.log(productsInCart);
+   
     if(productsInCart!=null)
     // Object.keys(productsInCart)=array
     this.setState({productsInCart:(Object.keys(productsInCart).length)});
@@ -45,7 +44,7 @@ componentDidMount(){
   })
   }
   catch(error){
-    console.log("error");
+
   }
  }
 }
@@ -85,6 +84,7 @@ render(){
           </li>
 
           <li className='nav-item'>
+            {/* this is kind of if else */}
             {!(this.state.loginstatus)&&<a className="nav-link" onClick={this.login}>Login</a>}
           </li>
 
